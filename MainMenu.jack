@@ -1,0 +1,50 @@
+class MainMenu{
+    field Array menuStr;
+    field int key;
+    field Game game;
+
+    constructor MainMenu new() {
+        let menuStr = Array.new(4);
+        let menuStr[0] = "H A N G M A N";
+        let menuStr[1] = "-------------";
+        let menuStr[2] = "Use the keyboard to spell the letters of the word!";
+        let menuStr[3] = "Press 'p' to play, 'spacebar' to quit.";
+        return this;
+    }
+    
+    method void showMenu(){
+        // Enquanto a tecla Q não for pressionada
+        while (~(key = 32)) {
+
+            // Comandos para impressão do menu
+            do Screen.clearScreen();
+            do Output.moveCursor(10, 24);
+            do Output.printString(menuStr[0]);
+            do Output.moveCursor(11, 24);
+            do Output.printString(menuStr[1]);
+            do Output.moveCursor(13, 6);
+            do Output.printString(menuStr[2]);
+            do Output.moveCursor(15, 11);
+            do Output.printString(menuStr[3]);
+
+        // Enquanto nenhuma tecla for pressionada 
+            while (key = 0) {
+              let key = Keyboard.keyPressed();
+            }
+
+        // Se o botão de iniciar o game (tecla P) for ativado
+            if (key = 80) {
+              do Screen.clearScreen();
+              let game = Game.new();
+              do game.dispose();
+              let key = 0;
+            }
+        }
+        return;
+    }
+
+    method void dispose(){
+        do Memory.deAlloc(this);
+        return;
+    }
+}

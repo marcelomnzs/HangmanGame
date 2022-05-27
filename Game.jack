@@ -1,0 +1,142 @@
+class Game{
+    field boolean exit;
+    field Word currentWord;
+    field Player player;
+    field int wordCounter;
+    field List wordList;
+
+    constructor Game new(){
+        let wordCounter = 0;
+        let player = Player.new();
+        do Sys.wait(500);
+        let currentWord = toBeGuessedWord();
+        do drawUI();
+        do startGame();
+        let exit = false;
+        return this;
+    }
+
+    method void startGame(){
+        // Declaração de variaveis
+        var int playerKey;
+        let playerKey = 0;
+
+        while(~(exit)){
+            let playerKey = Keyboard.keyPressed();
+            // Se a tecla for "Backspace" sair do game
+            if(playerKey = 32){
+                let exit = true;
+                return;
+            }
+
+            if(~(playerKey = 0)){
+                do checkAnswer(playerKey);
+                do Sys.wait(500);
+                do drawUI();
+            }
+        }
+        return;
+    }
+
+    method void drawUI(){
+        // Variaveis do contador para o desenho das vidas
+        var int counter;
+        let counter = 0;
+        
+        do drawWordLines(currentWord);
+
+        // Desenha as vidas do jogador na tela
+        while(counter < 6){
+			do drawPlayerLives(12 + counter);
+            do Sys.wait(100);
+			let counter = counter + 1;
+		}
+
+        // Número de palavras acertadas do Jogados
+        do Output.moveCursor(2, 23);
+        do Output.printString("Number of Words: ");
+        do Output.printInt(wordCounter);
+
+        // Número de pontos
+        do Output.moveCursor(3, 23);
+        do Output.printString("Number of Points: ");
+        do Output.printInt(player.getPoints());
+
+        return;
+    }
+
+    // Desenha as vidas do Jogador no topo da tela
+    method void drawPlayerLives(int location) {
+	    var int memAddress; 
+	    let memAddress = 16384+location;
+
+	    do Memory.poke(memAddress +33, 2044);
+	    do Memory.poke(memAddress +1, 0);
+	    do Memory.poke(memAddress +65, 1540);
+	    do Memory.poke(memAddress +97, 3844);
+	    do Memory.poke(memAddress +129, 3844);
+	    do Memory.poke(memAddress +161, 3844);
+	    do Memory.poke(memAddress +193, 3844);
+	    do Memory.poke(memAddress +225, 1540);
+	    do Memory.poke(memAddress +257, 3844);
+	    do Memory.poke(memAddress +289, 8068);
+	    do Memory.poke(memAddress +321, 16324);
+	    do Memory.poke(memAddress +353, 28516);
+	    do Memory.poke(memAddress +385, 28516);
+	    do Memory.poke(memAddress +417, 3844);
+	    do Memory.poke(memAddress +449, 3844);
+	    do Memory.poke(memAddress +481, 2308);
+	    do Memory.poke(memAddress +513, 14788);
+	    do Memory.poke(memAddress +545, 31204);
+        return;
+    }
+
+    // Desenha as linhas das palavras na tela
+     method void drawWordLines(Word word){
+        var int wordSize;
+        var int counter;
+
+        let counter = 0;
+        let wordSize = word.getNumberOfLetters();
+
+        // Mexe o cursor para a posição especificada
+        while(counter < wordSize){
+            do Output.moveCursor(13, (25 + counter));
+            do Output.printString("-");
+            do Sys.wait(100);
+            let counter = counter + 1;
+        }
+        return;
+    }
+
+    // Chama a prórixma palavra de uma lista pré determinada de palavras
+    method Word toBeGuessedWord(){
+        var Word word;
+        let word = Word.new("PINDAMONHANGABA");
+        return word;
+    }
+
+    // Verifica a letra entrada pelo jogador
+    method void checkAnswer(int keyCode){
+        var int counter;
+        let counter = 0;
+
+        // do Output.printInt(currentWord.getLetters(counter));
+        
+        // Verifica se o código entrado pelo usuário é correspondente a uma letra da palavra
+        while(counter < currentWord.getNumberOfLetters()){
+            if(keyCode = currentWord.getLetters(counter)){
+                do Output.moveCursor(12, (25 + counter));
+                do Output.printChar(keyCode);
+                do player.increaseNumberOfPoints();
+            }
+            let counter = counter + 1;
+        }
+        return;
+    }
+
+    method void dispose(){
+        do Memory.deAlloc(this);
+        return;
+    }
+}

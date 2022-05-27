@@ -1,0 +1,32 @@
+class Main{
+    // Função main 
+    function void main(){
+		var MainMenu menu;
+		let menu = MainMenu.new();
+		do menu.showMenu();
+		do menu.dispose();
+		
+		
+		/* CÓDIGO PRA PODER PEGAR OS ASCII DO ARRAY DA PALAVRA
+		 var Word word;
+		 var int lettersArray;
+		 var int numberOfLetters;
+		 var int counter;
+		 let word = Word.new("APPLE");
+
+		 // retorna um inteiro equivalente ao código ASCII da letra
+		
+		 let counter = 0;
+		 let numberOfLetters = word.getNumberOfLetters();
+
+		 while(counter < numberOfLetters){
+		 	let lettersArray = word.getLetters(counter);
+		 	do Output.printInt(lettersArray);
+		 	do Output.println();
+		 	let counter = counter + 1;
+		 }*/
+
+
+        return;
+    }
+}

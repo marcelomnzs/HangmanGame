@@ -1,0 +1,29 @@
+class Player{
+    field int numberOfLives, points;
+
+    constructor Player new(){
+        let numberOfLives = 6;
+        let points = 0;
+        return this;
+    }
+
+    method void decreaseLife(){
+        let numberOfLives = numberOfLives - 1;
+        return;
+    }
+
+    method void increaseNumberOfPoints(){
+        let points = points + 1;
+        return;
+    }
+
+    method String gameOver(){
+        var String message;
+        let message = "Game Over, you lost all of your lives!";
+        return message;
+    }
+
+    // Funções Getters
+    method int getNumberOfLives() { return numberOfLives; }
+    method int getPoints() { return points; }
+}

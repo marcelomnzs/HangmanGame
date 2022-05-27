@@ -1,0 +1,31 @@
+/*
+    Para cada palavra, um array de tamanho "WordSize" será gerado, contendo
+    em cada index uma letra da palavra. Para a criação do array, será utilizado a variável wordsize
+*/
+
+class Word{
+    field int wordSize;
+    field Array letters;
+
+    constructor Word new(String word){
+        var int counter;
+        let counter = 0; 
+        let wordSize = String.length(word);
+
+        // Cria um array passando o número de letras como indice
+        let letters = Array.new(wordSize);
+
+        // Coloca cada letra da palavra no array
+        while(counter < wordSize){
+            let letters[counter] = word.charAt(counter);
+            let counter = counter + 1;
+        }
+
+        return this;
+    }
+
+    // Getters
+    method int getNumberOfLetters(){ return wordSize; }
+    method Array getLetters(int index){ return letters[index]; }
+    
+}
